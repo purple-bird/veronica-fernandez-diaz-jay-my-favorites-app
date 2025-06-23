@@ -24,7 +24,9 @@ function FavoritesForm({ onAddFavorite }) {
         ref={favoriteTitleInput}
         onChange={(e) => setWorkingFavoriteTitle(e.target.value)}
       ></input>
-      <button disabled={workingFavoriteTitle.trim() === ''}>Add Favorite</button>
+      <button disabled={workingFavoriteTitle.trim() === ''}>
+        Add Favorite
+      </button>
     </form>
   );
 }
