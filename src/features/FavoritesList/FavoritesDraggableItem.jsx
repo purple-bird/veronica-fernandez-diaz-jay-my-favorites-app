@@ -1,4 +1,5 @@
 import FavoritesListItem from './FavoritesListItem.jsx';
+import CategoryDropdown from '../../shared/CategoryDropdown.jsx'
 import { useState, useEffect } from 'react';
 
 function FavoritesDraggableItem({
@@ -12,13 +13,16 @@ function FavoritesDraggableItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(favorite.title);
+  const [workingCategory, setWorkingCategory] =useState(favorite.category);
 
   useEffect(() => {
     setWorkingTitle(favorite.title);
+    setWorkingCategory(favorite.category);
   }, [favorite]);
 
   function handleCancelEdit() {
     setWorkingTitle(favorite.title);
+    setWorkingCategory(favorite.category);
     setIsEditing(false);
   }
 
@@ -27,11 +31,12 @@ function FavoritesDraggableItem({
   }
 
   function handleUpdate(event) {
-    if (isEditing === false) return;
     event.preventDefault();
+    if (isEditing === false) return;
     onUpdateFavorite({
       ...favorite,
       title: workingTitle,
+      category: workingCategory,
     });
     setIsEditing(false);
   }
@@ -47,6 +52,7 @@ function FavoritesDraggableItem({
         {isEditing ? (
           <>
             <input type="text" value={workingTitle} onChange={handleEdit} />
+            <CategoryDropdown value={workingCategory} onChange={setWorkingCategory}/>
             <button type="button" onClick={handleCancelEdit}>
               Cancel
             </button>

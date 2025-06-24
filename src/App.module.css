@@ -1,0 +1,27 @@
+.form {
+  background-color: #b098b8;
+  margin: 0 auto;
+  width: fit-content;
+  padding: 2rem 4rem 10rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.errorBox {
+  border-color: var(--secondary-color);
+  border-style: solid;
+  background-color: var(--secondary-color);
+}
+
+.errorMessage {
+  padding: 0.5rem;
+  color: var(--text-secondary-color);
+}
+
+.errorButton {
+  color: var(--text-secondary-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: bold;
+}
