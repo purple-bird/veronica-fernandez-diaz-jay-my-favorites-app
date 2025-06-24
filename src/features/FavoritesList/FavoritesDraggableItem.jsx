@@ -1,5 +1,5 @@
 import FavoritesListItem from './FavoritesListItem.jsx';
-import CategoryDropdown from '../../shared/CategoryDropdown.jsx'
+import CategoryDropdown from '../../shared/CategoryDropdown.jsx';
 import { useState, useEffect } from 'react';
 
 function FavoritesDraggableItem({
@@ -13,7 +13,7 @@ function FavoritesDraggableItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(favorite.title);
-  const [workingCategory, setWorkingCategory] =useState(favorite.category);
+  const [workingCategory, setWorkingCategory] = useState(favorite.category);
 
   useEffect(() => {
     setWorkingTitle(favorite.title);
@@ -42,37 +42,38 @@ function FavoritesDraggableItem({
   }
 
   return (
-    <div>
-      <li
-        draggable
-        onDragStart={() => onDragStart(index)}
-        onDragOver={onDragOver}
-        onDrop={() => onDrop(index)}
-      >
-        {isEditing ? (
-          <>
-            <input type="text" value={workingTitle} onChange={handleEdit} />
-            <CategoryDropdown value={workingCategory} onChange={setWorkingCategory}/>
-            <button type="button" onClick={handleCancelEdit}>
-              Cancel
-            </button>
-            <button type="button" onClick={handleUpdate}>
-              Update
-            </button>
-          </>
-        ) : (
-          <>
-            <FavoritesListItem favorite={favorite} />
-            <button type="button" onClick={() => setIsEditing(true)}>
-              Edit
-            </button>
-            <button type="button" onClick={() => onDelete(favorite.id)}>
-              Delete
-            </button>
-          </>
-        )}
-      </li>
-    </div>
+    <li
+      draggable
+      onDragStart={() => onDragStart(index)}
+      onDragOver={onDragOver}
+      onDrop={() => onDrop(index)}
+    >
+      {isEditing ? (
+        <>
+          <input type="text" value={workingTitle} onChange={handleEdit} />
+          <CategoryDropdown
+            value={workingCategory}
+            onChange={setWorkingCategory}
+          />
+          <button type="button" onClick={handleCancelEdit}>
+            Cancel
+          </button>
+          <button type="button" onClick={handleUpdate}>
+            Update
+          </button>
+        </>
+      ) : (
+        <>
+          <FavoritesListItem favorite={favorite} />
+          <button type="button" onClick={() => setIsEditing(true)}>
+            Edit
+          </button>
+          <button type="button" onClick={() => onDelete(favorite.id)}>
+            Delete
+          </button>
+        </>
+      )}
+    </li>
   );
 }
 

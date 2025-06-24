@@ -1,14 +1,35 @@
-import FavoritesListItem from './FavoritesListItem.jsx';
+import FavoritesDraggableItem from './FavoritesDraggableItem.jsx';
 
-function FavoritesList({ favoriteList }) {
+function FavoritesList({
+  favoriteList,
+  isLoading,
+  onUpdateFavorite,
+  onDelete,
+  onDragStart,
+  onDragOver,
+  onDrop,
+}) {
+  if (isLoading) {
+    return <p>Loading your favorite items...</p>;
+  }
+
   if (favoriteList.length === 0) {
-    return <p>Add a favorite to get started</p>;
+    return <p>Add a favorite to get started...</p>;
   }
 
   return (
     <ol>
-      {favoriteList.map((favorite) => (
-        <FavoritesListItem key={favorite.id} favorite={favorite} />
+      {favoriteList.map((favorite, index) => (
+        <FavoritesDraggableItem
+          key={favorite.id}
+          favorite={favorite}
+          index={index}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          onDrop={() => onDrop(index)}
+          onDelete={onDelete}
+          onUpdateFavorite={onUpdateFavorite}
+        />
       ))}
     </ol>
   );
