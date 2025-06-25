@@ -1,0 +1,44 @@
+.item {
+  padding-bottom: 0.5rem;
+  background-color: rgb(212, 197, 223);
+  border: solid rgb(206, 194, 194);
+  font-size: 1.2rem;
+  width: 40%;
+  font-weight: 500;
+}
+
+.deleteButton {
+  color: var(--text-secondary-color);
+  background-color: lightslategray;
+  border-color: lightslategray;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.editButton {
+  color: var(--text-secondary-color);
+  background-color: darkslategray;
+  border-color: darkslategray;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.cancelButton {
+  color: var(--text-secondary-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: bold;
+  margin: 0rem 0.5rem 0rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.updateButton {
+  color: var(--text-secondary-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: bold;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
