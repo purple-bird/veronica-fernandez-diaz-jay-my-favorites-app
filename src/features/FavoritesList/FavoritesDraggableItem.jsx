@@ -1,5 +1,6 @@
 import FavoritesListItem from './FavoritesListItem.jsx';
-import CategoryDropdown from '../../shared/CategoryDropdown.jsx';
+import Categories from '../../shared/Categories.jsx';
+import styles from './FavoritesDraggableItem.module.css';
 import { useState, useEffect } from 'react';
 
 function FavoritesDraggableItem({
@@ -47,28 +48,42 @@ function FavoritesDraggableItem({
       onDragStart={() => onDragStart(index)}
       onDragOver={onDragOver}
       onDrop={() => onDrop(index)}
+      className={styles.item}
     >
       {isEditing ? (
         <>
           <input type="text" value={workingTitle} onChange={handleEdit} />
-          <CategoryDropdown
-            value={workingCategory}
-            onChange={setWorkingCategory}
-          />
-          <button type="button" onClick={handleCancelEdit}>
+          <Categories value={workingCategory} onChange={setWorkingCategory} />
+          <button
+            type="button"
+            onClick={handleCancelEdit}
+            className={styles.cancelButton}
+          >
             Cancel
           </button>
-          <button type="button" onClick={handleUpdate}>
+          <button
+            type="button"
+            onClick={handleUpdate}
+            className={styles.updateButton}
+          >
             Update
           </button>
         </>
       ) : (
         <>
           <FavoritesListItem favorite={favorite} />
-          <button type="button" onClick={() => setIsEditing(true)}>
+          <button
+            type="button"
+            onClick={() => setIsEditing(true)}
+            className={styles.editButton}
+          >
             Edit
           </button>
-          <button type="button" onClick={() => onDelete(favorite.id)}>
+          <button
+            type="button"
+            onClick={() => onDelete(favorite.id)}
+            className={styles.deleteButton}
+          >
             Delete
           </button>
         </>

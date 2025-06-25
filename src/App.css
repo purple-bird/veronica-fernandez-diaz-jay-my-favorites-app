@@ -108,7 +108,11 @@ h2 {
 
 p {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
+}
+
+label {
+  font-weight: 600;
 }
 
 /*Color system*/

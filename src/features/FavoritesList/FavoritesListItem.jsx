@@ -1,8 +1,10 @@
+import styles from './FavoritesListItem.module.css';
+
 function FavoritesListItem({ favorite }) {
   return (
-    <div>
-      {favorite.title}
-      {favorite.category}
+    <div className={styles.itemContainer}>
+      <span className={styles.title}> {favorite.title} </span>
+      <span className={styles.category}> {favorite.category} </span>
     </div>
   );
 }

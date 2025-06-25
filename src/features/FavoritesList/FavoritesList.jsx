@@ -19,6 +19,7 @@ function FavoritesList({
 
   return (
     <ol>
+      <br></br>
       {favoriteList.map((favorite, index) => (
         <FavoritesDraggableItem
           key={favorite.id}

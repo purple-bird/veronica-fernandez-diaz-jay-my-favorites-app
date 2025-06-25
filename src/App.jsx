@@ -4,13 +4,13 @@ import AboutPage from './pages/AboutPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import Header from './shared/Header.jsx';
 import { useEffect, useCallback, useReducer, useRef } from 'react';
-import styles from './App.module.css';
 import {
   reducer as favoritesReducer,
   actions as favoriteActions,
   initialState as initialFavoritesState,
 } from './reducers/favorites.reducer.js';
 import { Routes, Route } from 'react-router';
+import styles from './App.module.css';
 
 function App() {
   const [favoriteState, dispatch] = useReducer(
@@ -23,7 +23,7 @@ function App() {
   }`;
   const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
-  const { favoriteList, errorMessage } = favoriteState;
+  const { favoriteList, errorMessage, isSaving } = favoriteState;
   const dragItemIndex = useRef(null);
 
   const memoizedSetErrorMessage = useCallback((message) => {
@@ -181,6 +181,12 @@ function App() {
         throw new Error('Failed to delete item...');
       }
 
+      const updatedFavorites = favoriteList
+        .filter((favorite) => favorite.id !== id)
+        .map((favorite, index) => ({ ...favorite, order: index + 1 }));
+
+      await storeOrder(updatedFavorites);
+
       dispatch({ type: favoriteActions.deleteFavorite, id });
     } catch (error) {
       memoizedSetErrorMessage(`${error.message}. Deletion failed...`);
@@ -240,32 +246,36 @@ function App() {
   };
 
   const storeOrder = async (updatedFavorites) => {
-    const payload = {
-      records: updatedFavorites.map((favorite, index) => ({
-        id: favorite.id,
-        fields: {
-          order: index + 1,
-        },
-      })),
-    };
-
-    const options = {
-      method: 'PATCH',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    };
+    const batchSize = 10;
+    const batchedRecords = [];
+    for (let i = 0; i < updatedFavorites.length; i += batchSize) {
+      const batch = updatedFavorites
+        .slice(i, i + batchSize)
+        .map((favorite, index) => ({
+          id: favorite.id,
+          fields: {
+            order: i + index + 1,
+          },
+        }));
+      batchedRecords.push(batch);
+    }
 
     try {
-      const resp = await fetch(url, options);
-      if (!resp.ok) {
-        const errorText = await resp.text();
-        throw new Error(errorText || 'Failed to save order...');
+      for (const batch of batchedRecords) {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ records: batch }),
+        };
+        const resp = await fetch(url, options);
+        if (!resp.ok) {
+          const errorText = await resp.text();
+          throw new Error(errorText || 'Failed to save order...');
+        }
       }
-      const data = await resp.json();
-      return data.records;
     } catch (error) {
       memoizedSetErrorMessage(error.message);
       throw error;
@@ -288,6 +298,7 @@ function App() {
               handleDragStart={handleDragStart}
               handleDragOver={handleDragOver}
               handleDrop={handleDrop}
+              isSaving={isSaving}
             />
           }
         />

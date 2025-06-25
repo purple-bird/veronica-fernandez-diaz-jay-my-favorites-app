@@ -1,4 +1,4 @@
-import CategoryDropdown from '../shared/CategoryDropdown.jsx';
+import Categories from '../shared/Categories.jsx';
 import { useState, useRef } from 'react';
 
 function FavoritesForm({ onAddFavorite, isSaving }) {
@@ -21,7 +21,12 @@ function FavoritesForm({ onAddFavorite, isSaving }) {
 
   return (
     <form onSubmit={handleAddFavorite}>
-      <label htmlFor="favoriteTitle">Enter favorite item here:</label>
+      <p>
+        You can submit your favorite items below. You can select, drag, and drop
+        the item to change the order of the list.
+      </p>
+      <br></br>
+      <label htmlFor="favoriteTitle">Enter favorite item here: </label>
       <input
         id="favoriteTitle"
         name="title"
@@ -30,11 +35,9 @@ function FavoritesForm({ onAddFavorite, isSaving }) {
         onChange={(e) => setWorkingFavoriteTitle(e.target.value)}
       ></input>
       <br></br>
-      <CategoryDropdown
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-      />
-      <br />
+      <Categories value={selectedCategory} onChange={setSelectedCategory} />
+      <br></br>
+      <br></br>
       <button
         disabled={
           isSaving ||
@@ -42,8 +45,9 @@ function FavoritesForm({ onAddFavorite, isSaving }) {
           selectedCategory === 'default'
         }
       >
-        {isSaving ? 'Saving...' : 'Add Favorite'}
+        Add Favorite
       </button>
+      {isSaving && <div>Saving...</div>}
     </form>
   );
 }

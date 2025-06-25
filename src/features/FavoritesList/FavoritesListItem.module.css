@@ -1,0 +1,19 @@
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  text-align: left;
+  margin-left: 1rem;
+  margin-right: 1.5rem;
+  font-weight: 600;
+}
+
+.category {
+  text-align: right;
+  margin-right: 1rem;
+  color: darkslategray;
+  font-weight: 800;
+}

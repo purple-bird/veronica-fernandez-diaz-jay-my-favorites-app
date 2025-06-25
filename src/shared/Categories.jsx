@@ -1,4 +1,4 @@
-function CategoryDropdown({ value, onChange }) {
+function Categories({ value, onChange }) {
   return (
     <select value={value} onChange={(e) => onChange(e.target.value)}>
       <option value="default" disabled>
@@ -11,4 +11,4 @@ function CategoryDropdown({ value, onChange }) {
   );
 }
 
-export default CategoryDropdown;
+export default Categories;
